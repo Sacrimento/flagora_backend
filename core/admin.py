@@ -7,7 +7,11 @@ from django.utils.html import format_html
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
+<<<<<<< HEAD
 from core.models import City, Country, Guess, User, UserCountryScore, UserPreferenceGameMode, UserStats
+=======
+from core.models import City, Country, Department, Guess, User, UserDepartmentScore
+>>>>>>> d85e547 (Test Claude Code)
 from core.services.country_services import country_update
 
 
@@ -178,3 +182,20 @@ class UserCountryScoreAdmin(admin.ModelAdmin):
 @admin.register(Guess)
 class GuessAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(Department)
+class DepartmentAdmin(admin.ModelAdmin):
+    list_display = ("number", "name", "region", "prefecture")
+    search_fields = ("number", "name", "region", "prefecture")
+    list_filter = ("region",)
+    ordering = ("number",)
+
+
+@admin.register(UserDepartmentScore)
+class UserDepartmentScoreAdmin(admin.ModelAdmin):
+    list_display = ("user", "department", "game_mode", "created_at", "updated_at")
+    list_filter = ("game_mode", "department__region")
+    search_fields = ("user__username", "department__name", "department__number")
+    readonly_fields = ("created_at", "updated_at")
+    filter_horizontal = ("user_guesses",)
