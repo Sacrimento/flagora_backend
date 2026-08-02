@@ -21,3 +21,5 @@ media
 htmlcov
 
 static
+
+core/**/data
